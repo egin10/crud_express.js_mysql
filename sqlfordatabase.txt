@@ -1,0 +1,86 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.10deb1
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Oct 28, 2016 at 04:05 PM
+-- Server version: 5.5.53-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.20
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `restful_api_demo`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_info`
+--
+
+CREATE TABLE IF NOT EXISTS `user_info` (
+  `user_info_id` int(70) NOT NULL AUTO_INCREMENT,
+  `user_id_fk` int(70) NOT NULL,
+  `user_name` varchar(45) DEFAULT NULL,
+  `user_location` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`user_info_id`),
+  UNIQUE KEY `user_id_fk_UNIQUE` (`user_id_fk`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_login`
+--
+
+CREATE TABLE IF NOT EXISTS `user_login` (
+  `user_id` int(70) NOT NULL AUTO_INCREMENT,
+  `user_email` varchar(45) NOT NULL,
+  `user_password` varchar(45) DEFAULT NULL,
+  `user_join_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_email_UNIQUE` (`user_email`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_status`
+--
+
+CREATE TABLE IF NOT EXISTS `user_status` (
+  `user_status_id` int(70) NOT NULL AUTO_INCREMENT,
+  `user_id_fk` int(70) NOT NULL,
+  `status_text` text,
+  `status_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_status_id`),
+  UNIQUE KEY `user_id_fk_UNIQUE` (`user_id_fk`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `user_info`
+--
+ALTER TABLE `user_info`
+  ADD CONSTRAINT `user_info_foreign_key` FOREIGN KEY (`user_id_fk`) REFERENCES `user_login` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `user_status`
+--
+ALTER TABLE `user_status`
+  ADD CONSTRAINT `user_status_foreign_key` FOREIGN KEY (`user_id_fk`) REFERENCES `user_login` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
